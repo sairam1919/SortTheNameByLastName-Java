@@ -39,9 +39,9 @@ public class JavaTest {
 	 * This method is used to sort the file content
 	 * 
 	 * @param fileData Data in the file
-	 * @return sortedList of data in String format
+	 * @return sortedList of data
 	 */
-	private static String sortFileContent(ArrayList<String> fileData) {
+	private static ArrayList<String> sortFileContent(ArrayList<String> fileData) {
 		Collections.sort(fileData, new Comparator<String>() {
 			public int compare(String o1, String o2) {
 				String[] split1 = o1.split(" ");
@@ -55,19 +55,21 @@ public class JavaTest {
 				}
 			}
 		});
-		return fileData.toString();
+		return fileData;
 	}
 
 	/**
 	 * This method is used to write the sortedResponse to the File
 	 * 
-	 * @param sortedRes sortedList of String
+	 * @param sortedRes sortedList of data
 	 */
-	private static void writeFile(String sortedRes) {
+	private static void writeFile(ArrayList<String> sortedRes) {
 		FileWriter myWriter;
 		try {
 			myWriter = new FileWriter("sorted-names-list.txt");
-			myWriter.write(sortedRes);
+			for (String str : sortedRes) {
+				myWriter.write(str + System.lineSeparator());
+			}
 			myWriter.close();
 			logger.info("Data written to the file successfuly.");
 		} catch (IOException e) {
@@ -80,7 +82,7 @@ public class JavaTest {
 			if (args.length > 0) {
 				ArrayList<String> res = readFile(args[0]);
 				if (!res.isEmpty()) {
-					String sortedRes = sortFileContent(res);
+					ArrayList<String> sortedRes = sortFileContent(res);
 					logger.info("Sorted Response ::" + sortedRes);
 					writeFile(sortedRes);
 				} else {
