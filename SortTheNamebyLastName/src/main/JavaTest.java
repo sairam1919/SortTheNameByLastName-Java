@@ -23,7 +23,8 @@ public class JavaTest {
 	private static ArrayList<String> readFile(String filePath) throws Exception {
 		ArrayList<String> list = new ArrayList<>();
 		try {
-			Scanner s = new Scanner(new File(filePath));
+			File file = new File(filePath);
+			Scanner s = new Scanner(file);
 			while (s.hasNext()) {
 				list.add(s.nextLine());
 			}
@@ -77,22 +78,31 @@ public class JavaTest {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static String service(String[] args) {
+		String response = "Data written to the file successfuly";
 		try {
 			if (args.length > 0) {
 				ArrayList<String> res = readFile(args[0]);
 				if (!res.isEmpty()) {
 					ArrayList<String> sortedRes = sortFileContent(res);
-					logger.info("Sorted Response ::" + sortedRes);
+					logger.info("Sorted Response :: " + sortedRes);
 					writeFile(sortedRes);
 				} else {
-					logger.info("Error while sorting the File Data");
+					logger.info("Error while Reading the File Data");
+					response = "Error while Reading the File Data";
 				}
 			} else {
 				logger.info("No valid file path provided as argument");
+				response = "No valid file path provided as argument";
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage());
+			response = e.getMessage();
 		}
+		return response;
+	}
+
+	public static void main(String[] args) {
+		service(args);
 	}
 }
