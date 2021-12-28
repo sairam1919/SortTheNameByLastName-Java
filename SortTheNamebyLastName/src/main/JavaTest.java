@@ -78,6 +78,11 @@ public class JavaTest {
 		}
 	}
 
+	/**
+	 * This method is used to handle the request and response
+	 * @param args String array contains the file path
+	 * @return response
+	 */
 	public static String service(String[] args) {
 		String response = "Data written to the file successfuly";
 		try {
